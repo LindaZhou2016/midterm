@@ -32,7 +32,7 @@ class Game
         Console_Screen.cls
         puts "Instruction:\n\n"
  
-        puts "This game randomly generates a number from 1 to 100 and "
+        puts "This game randomly generates a number from 1 to 1000 and "
         puts "challaenges you to identify it in as few guesses and possible "
     end
  
@@ -51,27 +51,32 @@ class Game
  
             reply = STDIN.gets
             reply.chop!
-            reply = reply.to_i
+
+                       
+            if /\D+/.match(reply) then 
+                puts "Invalid input. Please input an integer between 1 to 1000. Please play the game next time."
+                break
+            else     
+                reply = reply.to_i
+                if reply < 1 or reply > 1000 then
+                  redo # redo the ciurrent iteration of the loop
+                end
  
-            if reply < 1 or reply > 100 then
-                redo # redo the ciurrent iteration of the loop
-            end
- 
-            if reply == number then
+                if reply == number then
                 Console_Screen.cls
                 print "You have guessed the number! Press Enter to continue."
                 Console_Screen.pause
                 break
-            elsif reply < number then
+                elsif reply < number then
                 Console_Screen.cls
                 print "Your guess is too low! Press enter to continue."
                 Console_Screen.pause
-            elsif reply > number then
+                elsif reply > number then
                 Console_Screen.cls
                 print "Your guess is too high! Press enter to continue."
                 Console_Screen.pause
+                end
             end
- 
         end
              
     end
@@ -81,7 +86,7 @@ class Game
         puts "\t\t\Thanks you for playing the number game!!"
     end
  
-    def display_times   ## Question A
+    def display_times
         @avg_guess=$tot_guess/$tot_round
         puts "You have played #{$tot_round} times, and your averaged guess is #{@avg_guess}"
     end
@@ -120,7 +125,7 @@ class Game
  
         loop do
             SQ.play_game
- 
+            Console_Screen.pause
             Console_Screen.cls
  
             print "Would you like to play again? (y/n): "
